@@ -5,11 +5,15 @@ function FlightLog() {
   const [flightData, setFlightData] = useState({
     date: "",
     location: "",
-    duration: "",
-    purpose: "",
+    launch: "",
+    land: "",
+    aircraftType: "",
+    aircraftNumber: "",
+    totalHours: "",
+    remarks: "",
   });
 
-  // Load data from localStorage on component mount
+  // Load data from localStorage
   useEffect(() => {
     const storedFlights = JSON.parse(localStorage.getItem("flights")) || [];
     setFlights(storedFlights);
@@ -33,15 +37,23 @@ function FlightLog() {
     if (
       flightData.date &&
       flightData.location &&
-      flightData.duration &&
-      flightData.purpose
+      flightData.launch &&
+      flightData.land &&
+      flightData.aircraftType &&
+      flightData.aircraftNumber &&
+      flightData.totalHours &&
+      flightData.remarks
     ) {
       setFlights([...flights, flightData]);
       setFlightData({
         date: "",
         location: "",
-        duration: "",
-        purpose: "",
+        launch: "",
+        land: "",
+        aircraftType: "",
+        aircraftNumber: "",
+        totalHours: "",
+        remarks: "",
       });
     }
   };
@@ -49,6 +61,12 @@ function FlightLog() {
   const handleDelete = (index) => {
     const updatedFlights = flights.filter((_, i) => i !== index);
     setFlights(updatedFlights);
+  };
+
+  const handleUpdate = (index) => {
+    const flightToUpdate = flights[index];
+    setFlightData(flightToUpdate);
+    handleDelete(index);
   };
 
   return (
@@ -70,33 +88,69 @@ function FlightLog() {
           required
         />
         <input
-          type="number"
-          name="duration"
-          value={flightData.duration}
+          type="time"
+          name="launch"
+          value={flightData.launch}
           onChange={handleChange}
-          placeholder="Duration (minutes)"
+          placeholder="Launch Time"
+          required
+        />
+        <input
+          type="time"
+          name="land"
+          value={flightData.land}
+          onChange={handleChange}
+          placeholder="Land Time"
           required
         />
         <input
           type="text"
-          name="purpose"
-          value={flightData.purpose}
+          name="aircraftType"
+          value={flightData.aircraftType}
           onChange={handleChange}
-          placeholder="Purpose"
+          placeholder="Aircraft Type"
           required
+        />
+        <input
+          type="number"
+          name="aircraftNumber"
+          value={flightData.aircraftNumber}
+          onChange={handleChange}
+          placeholder="Aircraft Number"
+          required
+        />
+        <input
+          type="number"
+          name="totalHours"
+          value={flightData.totalHours}
+          onChange={handleChange}
+          placeholder="Total Hours"
+          required
+        />
+        <input
+          type="text"
+          name="remarks"
+          value={flightData.remarks}
+          onChange={handleChange}
+          placeholder="Remarks"
         />
         <button type="submit">Log Flight</button>
       </form>
-
+      {/* Added the 3rd button on adds the log and the other deletes or updates the log. */}
       <h2>Logged Flights</h2>
       <ul>
         {flights.map((flight, index) => (
           <li key={index}>
             <p>Date: {flight.date}</p>
             <p>Location: {flight.location}</p>
-            <p>Duration: {flight.duration} minutes</p>
-            <p>Purpose: {flight.purpose}</p>
+            <p>Launch: {flight.launch}</p>
+            <p>Land: {flight.land}</p>
+            <p>Aircraft Type: {flight.aircraftType}</p>
+            <p>Aircraft Number: {flight.aircraftNumber}</p>
+            <p>Total Hours: {flight.totalHours}</p>
+            <p>Remarks: {flight.remarks}</p>
             <button onClick={() => handleDelete(index)}>Delete</button>
+            <button onClick={() => handleUpdate(index)}>Update</button>
           </li>
         ))}
       </ul>
