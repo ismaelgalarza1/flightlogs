@@ -1,5 +1,5 @@
 import React from "react";
-import FlightLog from "./flightlog";
+import FlightLog from "./components/Flightlogs/flightlog";
 
 function App() {
   return (
