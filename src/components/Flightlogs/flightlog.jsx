@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Card from "../UI/cards";
 import Chart from "./chart";
+import Styles from "./flightlog.module.css";
 
 const FlightLog = (props) => {
   const [flights, setFlights] = useState([]);
@@ -73,10 +74,10 @@ const FlightLog = (props) => {
   };
 
   return (
-    <div className="main">
-      <Card>
+    <div className={Styles.main}>
+      <Card className={Styles.flightCard}>
         <form onSubmit={handleSubmit}>
-          <div className="col-1">
+          <div className={Styles.inputSection} >
             <input
               type="date"
               name="date"
@@ -121,6 +122,7 @@ const FlightLog = (props) => {
 
           <div className="col-2">
             <input
+            className={Styles.input}
               type="text"
               name="aircraftType"
               value={flightData.aircraftType}
@@ -156,9 +158,9 @@ const FlightLog = (props) => {
         </form>
       </Card>
 
-      <div className="flight-logged">
+      <div className={Styles.flightLogged}>
         <h2>Flights Logged</h2>
-        <Card>
+        <Card className={Styles.card}>
           <ol type="1" className="flights">
             {flights.map((flight, index) => (
               <li key={index}>
@@ -180,9 +182,10 @@ const FlightLog = (props) => {
         </Card>
       </div>
 
-      <div className="chart">
+      <div className={Styles.chart}>
         <h2>Flight Chart</h2>
-        <Chart flights={flights} />
+        <Card className={Styles.card}><Chart flights={flights} /></Card>
+        
       </div>
     </div>
   );
