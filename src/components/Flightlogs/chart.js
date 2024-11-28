@@ -25,10 +25,8 @@ ChartJS.register(
 const Chart = ({ flights }) => {
   const [selectedPilot, setSelectedPilot] = useState("");
 
-  // Extract pilot names for dropdown
   const pilots = [...new Set(flights.map((flight) => flight.name))];
 
-  // Filter data based on the selected pilots for example me or someone else on the team
   const filteredFlights = selectedPilot
     ? flights.filter((flight) => flight.name === selectedPilot)
     : flights;
